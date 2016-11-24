@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -19,16 +20,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 buildscript {
-    ext.supportVersion = '25.0.1'
+    ext.supportVersion = '25.0.0'
     ext.butterKnifeVersion = '8.4.0'
     repositories {
         mavenCentral()
         jcenter()
     }
     dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
@@ -39,8 +45,8 @@ dependencies {
     compile "com.android.support:design:${supportVersion}"
     compile "com.jakewharton:butterknife:${butterKnifeVersion}"
     apt "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     compile 'com.github.provigen:ProviGen-lib:2.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
 }
 tasks.whenTaskAdded { task ->
     if(task.name.equals("lint")) {
